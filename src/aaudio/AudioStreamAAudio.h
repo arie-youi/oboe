@@ -18,8 +18,8 @@
 #define OBOE_STREAM_AAUDIO_H_
 
 #include <atomic>
-#include <shared_mutex>
 #include <mutex>
+#include <shared_mutex>
 #include <thread>
 
 #include "oboe/AudioStreamBuilder.h"
@@ -129,7 +129,7 @@ private:
 
     // pointer to the underlying 'C' AAudio stream, valid if open, null if closed
     std::atomic<AAudioStream *> mAAudioStream{nullptr};
-    std::shared_mutex           mAAudioStreamLock; // to protect mAAudioStream while closing
+    std::shared_timed_mutex     mAAudioStreamLock; // to protect mAAudioStream while closing
 
     static AAudioLoader *mLibLoader;
 

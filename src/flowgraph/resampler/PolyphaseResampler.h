@@ -25,7 +25,8 @@
 #include "MultiChannelResampler.h"
 #include "ResamplerDefinitions.h"
 
-namespace RESAMPLER_OUTER_NAMESPACE::resampler {
+namespace RESAMPLER_OUTER_NAMESPACE {
+namespace resampler {
 /**
  * Resampler that is optimized for a reduced ratio of sample rates.
  * All of the coefficients for each possible phase value are pre-calculated.
@@ -48,6 +49,7 @@ protected:
 
 };
 
-} /* namespace RESAMPLER_OUTER_NAMESPACE::resampler */
+} // namespace RESAMPLER_OUTER_NAMESPACE
+} // namespace resampler
 
 #endif //RESAMPLER_POLYPHASE_RESAMPLER_H

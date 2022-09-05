@@ -23,7 +23,8 @@
 #include "FlowGraphNode.h"
 #include "resampler/MultiChannelResampler.h"
 
-namespace FLOWGRAPH_OUTER_NAMESPACE::flowgraph {
+namespace FLOWGRAPH_OUTER_NAMESPACE {
+namespace flowgraph {
 
 class SampleRateConverter : public FlowGraphFilter {
 public:
@@ -58,6 +59,7 @@ private:
 
 };
 
-} /* namespace FLOWGRAPH_OUTER_NAMESPACE::flowgraph */
+} // namespace flowgraph
+} // namespace FLOWGRAPH_OUTER_NAMESPACE
 
 #endif //FLOWGRAPH_SAMPLE_RATE_CONVERTER_H

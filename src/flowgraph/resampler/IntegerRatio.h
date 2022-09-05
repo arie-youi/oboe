@@ -21,7 +21,8 @@
 
 #include "ResamplerDefinitions.h"
 
-namespace RESAMPLER_OUTER_NAMESPACE::resampler {
+namespace RESAMPLER_OUTER_NAMESPACE {
+namespace resampler {
 
 /**
  * Represent the ratio of two integers.
@@ -49,6 +50,7 @@ private:
     int32_t mDenominator;
 };
 
-} /* namespace RESAMPLER_OUTER_NAMESPACE::resampler */
+} // namespace RESAMPLER_OUTER_NAMESPACE
+} // namespace resampler
 
 #endif //RESAMPLER_INTEGER_RATIO_H

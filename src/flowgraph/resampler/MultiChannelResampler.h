@@ -36,7 +36,8 @@
 
 #include "ResamplerDefinitions.h"
 
-namespace RESAMPLER_OUTER_NAMESPACE::resampler {
+namespace RESAMPLER_OUTER_NAMESPACE {
+namespace resampler {
 
 class MultiChannelResampler {
 
@@ -269,6 +270,7 @@ private:
     const int              mChannelCount;
 };
 
-} /* namespace RESAMPLER_OUTER_NAMESPACE::resampler */
+} // namespace RESAMPLER_OUTER_NAMESPACE
+} // namespace resampler
 
 #endif //RESAMPLER_MULTICHANNEL_RESAMPLER_H

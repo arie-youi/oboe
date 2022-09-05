@@ -24,7 +24,8 @@
 #include "MultiChannelResampler.h"
 #include "ResamplerDefinitions.h"
 
-namespace RESAMPLER_OUTER_NAMESPACE::resampler {
+namespace RESAMPLER_OUTER_NAMESPACE {
+namespace resampler {
 
 /**
  * Simple resampler that uses bi-linear interpolation.
@@ -42,6 +43,7 @@ private:
     std::unique_ptr<float[]> mCurrentFrame;
 };
 
-} /* namespace RESAMPLER_OUTER_NAMESPACE::resampler */
+} // namespace RESAMPLER_OUTER_NAMESPACE
+} // namespace resampler
 
 #endif //RESAMPLER_LINEAR_RESAMPLER_H

@@ -63,7 +63,7 @@ typedef int32_t aaudio_session_id_t;
 #endif
 
 #ifndef __NDK_MAJOR__
-#define __NDK_MAJOR__ 0
+#define __NDK_MAJOR__ 25 // temp. overwrite with engine
 #endif
 
 #if __NDK_MAJOR__ < 24

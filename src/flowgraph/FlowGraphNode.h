@@ -57,7 +57,8 @@
 #endif // __ANDROID_NDK__
 #endif // FLOWGRAPH_OUTER_NAMESPACE
 
-namespace FLOWGRAPH_OUTER_NAMESPACE::flowgraph {
+namespace FLOWGRAPH_OUTER_NAMESPACE {
+namespace flowgraph {
 
 // Default block size that can be overridden when the FlowGraphPortFloat is created.
 // If it is too small then we will have too much overhead from switching between nodes.
@@ -445,6 +446,7 @@ public:
     FlowGraphPortFloatOutput output;
 };
 
-} /* namespace FLOWGRAPH_OUTER_NAMESPACE::flowgraph */
+} // namespace flowgraph
+} // namespace FLOWGRAPH_OUTER_NAMESPACE
 
 #endif /* FLOWGRAPH_FLOW_GRAPH_NODE_H */

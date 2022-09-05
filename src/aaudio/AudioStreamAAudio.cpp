@@ -348,7 +348,7 @@ Result AudioStreamAAudio::close() {
     AAudioStream *stream = nullptr;
     {
         // Wait for any methods using mAAudioStream to finish.
-        std::unique_lock<std::shared_mutex> lock2(mAAudioStreamLock);
+        std::unique_lock<std::shared_timed_mutex> lock2(mAAudioStreamLock);
         // Closing will delete *mAAudioStream so we need to null out the pointer atomically.
         stream = mAAudioStream.exchange(nullptr);
     }
@@ -484,7 +484,7 @@ Result AudioStreamAAudio::requestStop_l(AAudioStream *stream) {
 ResultWithValue<int32_t>   AudioStreamAAudio::write(const void *buffer,
                                      int32_t numFrames,
                                      int64_t timeoutNanoseconds) {
-    std::shared_lock<std::shared_mutex> lock(mAAudioStreamLock);
+    std::shared_lock<std::shared_timed_mutex> lock(mAAudioStreamLock);
     AAudioStream *stream = mAAudioStream.load();
     if (stream != nullptr) {
         int32_t result = mLibLoader->stream_write(mAAudioStream, buffer,
@@ -498,7 +498,7 @@ ResultWithValue<int32_t>   AudioStreamAAudio::write(const void *buffer,
 ResultWithValue<int32_t>   AudioStreamAAudio::read(void *buffer,
                                  int32_t numFrames,
                                  int64_t timeoutNanoseconds) {
-    std::shared_lock<std::shared_mutex> lock(mAAudioStreamLock);
+    std::shared_lock<std::shared_timed_mutex> lock(mAAudioStreamLock);
     AAudioStream *stream = mAAudioStream.load();
     if (stream != nullptr) {
         int32_t result = mLibLoader->stream_read(mAAudioStream, buffer,
@@ -589,7 +589,7 @@ ResultWithValue<int32_t> AudioStreamAAudio::setBufferSizeInFrames(int32_t reques
     // This calls getBufferSize() so avoid recursive lock.
     adjustedFrames = QuirksManager::getInstance().clipBufferSize(*this, adjustedFrames);
 
-    std::shared_lock<std::shared_mutex> lock(mAAudioStreamLock);
+    std::shared_lock<std::shared_timed_mutex> lock(mAAudioStreamLock);
     AAudioStream *stream = mAAudioStream.load();
     if (stream != nullptr) {
         int32_t newBufferSize = mLibLoader->stream_setBufferSize(mAAudioStream, adjustedFrames);
@@ -602,7 +602,7 @@ ResultWithValue<int32_t> AudioStreamAAudio::setBufferSizeInFrames(int32_t reques
 }
 
 StreamState AudioStreamAAudio::getState() {
-    std::shared_lock<std::shared_mutex> lock(mAAudioStreamLock);
+    std::shared_lock<std::shared_timed_mutex> lock(mAAudioStreamLock);
     AAudioStream *stream = mAAudioStream.load();
     if (stream != nullptr) {
         aaudio_stream_state_t aaudioState = mLibLoader->stream_getState(stream);
@@ -619,7 +619,7 @@ StreamState AudioStreamAAudio::getState() {
 }
 
 int32_t AudioStreamAAudio::getBufferSizeInFrames() {
-    std::shared_lock<std::shared_mutex> lock(mAAudioStreamLock);
+    std::shared_lock<std::shared_timed_mutex> lock(mAAudioStreamLock);
     AAudioStream *stream = mAAudioStream.load();
     if (stream != nullptr) {
         mBufferSizeInFrames = mLibLoader->stream_getBufferSize(stream);
@@ -628,7 +628,7 @@ int32_t AudioStreamAAudio::getBufferSizeInFrames() {
 }
 
 void AudioStreamAAudio::updateFramesRead() {
-    std::shared_lock<std::shared_mutex> lock(mAAudioStreamLock);
+    std::shared_lock<std::shared_timed_mutex> lock(mAAudioStreamLock);
     AAudioStream *stream = mAAudioStream.load();
 // Set to 1 for debugging race condition #1180 with mAAudioStream.
 // See also DEBUG_CLOSE_RACE in OboeTester.
@@ -646,7 +646,7 @@ void AudioStreamAAudio::updateFramesRead() {
 }
 
 void AudioStreamAAudio::updateFramesWritten() {
-    std::shared_lock<std::shared_mutex> lock(mAAudioStreamLock);
+    std::shared_lock<std::shared_timed_mutex> lock(mAAudioStreamLock);
     AAudioStream *stream = mAAudioStream.load();
     if (stream != nullptr) {
         mFramesWritten = mLibLoader->stream_getFramesWritten(stream);
@@ -654,7 +654,7 @@ void AudioStreamAAudio::updateFramesWritten() {
 }
 
 ResultWithValue<int32_t> AudioStreamAAudio::getXRunCount() {
-    std::shared_lock<std::shared_mutex> lock(mAAudioStreamLock);
+    std::shared_lock<std::shared_timed_mutex> lock(mAAudioStreamLock);
     AAudioStream *stream = mAAudioStream.load();
     if (stream != nullptr) {
         return ResultWithValue<int32_t>::createBasedOnSign(mLibLoader->stream_getXRunCount(stream));
@@ -669,7 +669,7 @@ Result AudioStreamAAudio::getTimestamp(clockid_t clockId,
     if (getState() != StreamState::Started) {
         return Result::ErrorInvalidState;
     }
-    std::shared_lock<std::shared_mutex> lock(mAAudioStreamLock);
+    std::shared_lock<std::shared_timed_mutex> lock(mAAudioStreamLock);
     AAudioStream *stream = mAAudioStream.load();
     if (stream != nullptr) {
         return static_cast<Result>(mLibLoader->stream_getTimestamp(stream, clockId,
@@ -717,7 +717,7 @@ ResultWithValue<double> AudioStreamAAudio::calculateLatencyMillis() {
 }
 
 bool AudioStreamAAudio::isMMapUsed() {
-    std::shared_lock<std::shared_mutex> lock(mAAudioStreamLock);
+    std::shared_lock<std::shared_timed_mutex> lock(mAAudioStreamLock);
     AAudioStream *stream = mAAudioStream.load();
     if (stream != nullptr) {
         return AAudioExtensions::getInstance().isMMapUsed(stream);

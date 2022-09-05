@@ -22,7 +22,8 @@
 
 #include "FlowGraphNode.h"
 
-namespace FLOWGRAPH_OUTER_NAMESPACE::flowgraph {
+namespace FLOWGRAPH_OUTER_NAMESPACE {
+namespace flowgraph {
 
 /**
  * Convert a multi-channel interleaved stream to multiple mono-channel
@@ -44,6 +45,7 @@ namespace FLOWGRAPH_OUTER_NAMESPACE::flowgraph {
         flowgraph::FlowGraphPortFloatInput input;
     };
 
-} /* namespace FLOWGRAPH_OUTER_NAMESPACE::flowgraph */
+} // namespace flowgraph
+} // namespace FLOWGRAPH_OUTER_NAMESPACE
 
 #endif //FLOWGRAPH_MULTI_TO_MANY_CONVERTER_H

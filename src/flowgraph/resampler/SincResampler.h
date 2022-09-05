@@ -24,7 +24,8 @@
 #include "MultiChannelResampler.h"
 #include "ResamplerDefinitions.h"
 
-namespace RESAMPLER_OUTER_NAMESPACE::resampler {
+namespace RESAMPLER_OUTER_NAMESPACE {
+namespace resampler {
 
 /**
  * Resampler that can interpolate between coefficients.
@@ -45,6 +46,7 @@ protected:
     double             mPhaseScaler = 1.0;
 };
 
-} /* namespace RESAMPLER_OUTER_NAMESPACE::resampler */
+} // namespace RESAMPLER_OUTER_NAMESPACE
+} // namespace resampler
 
 #endif //RESAMPLER_SINC_RESAMPLER_H
